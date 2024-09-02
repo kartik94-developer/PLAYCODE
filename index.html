@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .matrix span {
+            position: absolute;
+            top: -100px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ff00;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 0.5em;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 1.5em;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .loader {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: conic-gradient(#00ff00 10%, transparent 10%);
+            animation: rotate 2s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #000;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Contact Button */
+        .contact-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #00ff00;
+            background-color: transparent;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-shadow: 0 0 5px #00ff00;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        .contact-btn:hover {
+            background-color: #00ff00;
+            color: black;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            p {
+                font-size: 1em;
+            }
+            .loader {
+                width: 80px;
+                height: 80px;
+            }
+            .loader::before {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix"></div>
+    <div class="container">
+        <h1>We'll Be Back Soon!</h1>
+        <h1>LISTEN FULL VOICE</h1>
+        <p>Our app and bot is currently under maintenance. We apologize for any inconvenience.</p>
+        <div class="loader"></div>
+        <a href="https://t.me/jeanson_jemes_ancheta" class="contact-btn">Contact</a>
+        <button class="contact-btn" onclick="playAudio()">Play Audio</button>
+    </div>
+
+    <!-- Audio for "Under Maintenance" Voice -->
+    <audio id="maintenance-audio" src="your-audio-file.mp3" preload="auto"></audio>
+
+    <script>
+        // Matrix effect
+        const matrix = document.querySelector('.matrix');
+        const columns = Math.floor(window.innerWidth / 20);
+        const drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            matrix.innerHTML = '';
+            for (let i = 0; i < drops.length; i++) {
+                const span = document.createElement('span');
+                span.style.left = `${i * 20}px`;
+                span.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                span.style.animationDelay = `${Math.random() * 5}s`;
+                span.textContent = Math.floor(Math.random() * 10);
+                matrix.appendChild(span);
+            }
+        }
+
+        drawMatrix();
+        setInterval(drawMatrix, 100);
+
+        // Play audio when page loads
+        function playAudio() {
+            const audio = document.getElementById('maintenance-audio');
+            audio.play().catch(error => {
+                console.log('Autoplay blocked:', error);
+            });
+        }
+
+        // Attempt to play audio on page load
+        window.onload = function() {
+            playAudio();
+        };
+    </script>
+</body>
+</html>
